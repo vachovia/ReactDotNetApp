@@ -12,8 +12,8 @@ using ReactDotNetApp.DataAccess;
 namespace ReactDotNetApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240116212816_MenuItemSeedAndTwoUsers")]
-    partial class MenuItemSeedAndTwoUsers
+    [Migration("20240118144957_AddedShopingCart")]
+    partial class AddedShopingCart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -256,16 +256,16 @@ namespace ReactDotNetApp.Migrations
                         {
                             Id = "8383f68f-764c-4427-92b7-6e98902f5f4e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4543f8d6-6e56-4998-8653-9d03b6e1cf37",
+                            ConcurrencyStamp = "ccd322e5-0378-465a-b256-34ab8b86d3ff",
                             Email = "admin@redmango.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "System Admin",
                             NormalizedEmail = "ADMIN@REDMANGO.COM",
                             NormalizedUserName = "ADMIN@REDMANGO.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKRUpfinOIXVJyQ9mbPDhTOtFF4ugSTNCqSsVdUNcDpEXeeoK9Rjb8P+qlOfuBks6w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDHTcAVrN6+9cROaXEG8IO58NTk9Ksj7KjzSdW9892Ok8oHYyYxGdnmmpxtXI7exKw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2bc253d3-bff1-4b4d-ba3d-704fdc4be420",
+                            SecurityStamp = "168fddfe-2665-4844-9f6d-c776b83ac1e5",
                             TwoFactorEnabled = false,
                             UserName = "admin@redmango.com"
                         },
@@ -273,19 +273,45 @@ namespace ReactDotNetApp.Migrations
                         {
                             Id = "10851584-7191-4dee-a2b5-305ae30a9777",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0787cfeb-c8ac-4873-8fad-918a0ac9b714",
+                            ConcurrencyStamp = "5c5d6e6d-cfb5-4db7-83ea-8c237a5185fb",
                             Email = "user@redmango.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "System User",
                             NormalizedEmail = "USER@REDMANGO.COM",
                             NormalizedUserName = "USER@REDMANGO.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELGPRCbCa8+Ct96Dfy+lDI8vyd33YmnQP8G4zv+/1+vto9AIHLJMd04ebfUEq5eFXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF6F+A5X33VRG6SZEEHSo1KVl6+NzVuWwjUt9OJ6IN+HabyhmyGtO+XRO6EzP9Wbjg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c66f4ecf-6ad1-425b-a71b-9b8ff2c6edcc",
+                            SecurityStamp = "34a20070-7dc1-4b17-8618-3057eaf9cafd",
                             TwoFactorEnabled = false,
                             UserName = "user@redmango.com"
                         });
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("ReactDotNetApp.Models.MenuItem", b =>
@@ -423,6 +449,22 @@ namespace ReactDotNetApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ReactDotNetApp.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -472,6 +514,28 @@ namespace ReactDotNetApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.CartItem", b =>
+                {
+                    b.HasOne("ReactDotNetApp.Models.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReactDotNetApp.Models.ShoppingCart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MenuItem");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using ReactDotNetApp.DTO;
+using ReactDotNetApp.DTO.AuthDto;
+using ReactDotNetApp.DTO.MenuDto;
+using ReactDotNetApp.DTO.ShoppingCartDto;
 using ReactDotNetApp.Models;
 
 namespace ReactDotNetApp.AutoMapperConfig
@@ -11,6 +13,9 @@ namespace ReactDotNetApp.AutoMapperConfig
             CreateMap<MenuItemDto, MenuItem>().ReverseMap();
             CreateMap<MenuItemCreateDto, MenuItem>().ReverseMap();
             CreateMap<MenuItemUpdateDto, MenuItem>().ReverseMap();
+            CreateMap<ShoppingCart, ShoppingCartDto>().ReverseMap();
+
+            CreateMap<AppUser, RegistrationDto>().ReverseMap();
         }
     }
 }

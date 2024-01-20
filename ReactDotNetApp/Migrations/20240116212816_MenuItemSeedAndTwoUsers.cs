@@ -26,8 +26,8 @@ namespace ReactDotNetApp.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "10851584-7191-4dee-a2b5-305ae30a9777", 0, "0787cfeb-c8ac-4873-8fad-918a0ac9b714", "user@redmango.com", false, false, null, "System User", "USER@REDMANGO.COM", "USER@REDMANGO.COM", "AQAAAAIAAYagAAAAELGPRCbCa8+Ct96Dfy+lDI8vyd33YmnQP8G4zv+/1+vto9AIHLJMd04ebfUEq5eFXQ==", null, false, "c66f4ecf-6ad1-425b-a71b-9b8ff2c6edcc", false, "user@bookstore.com" },
-                    { "8383f68f-764c-4427-92b7-6e98902f5f4e", 0, "4543f8d6-6e56-4998-8653-9d03b6e1cf37", "admin@redmango.com", false, false, null, "System Admin", "ADMIN@REDMANGO.COM", "ADMIN@REDMANGO.COM", "AQAAAAIAAYagAAAAEKRUpfinOIXVJyQ9mbPDhTOtFF4ugSTNCqSsVdUNcDpEXeeoK9Rjb8P+qlOfuBks6w==", null, false, "2bc253d3-bff1-4b4d-ba3d-704fdc4be420", false, "admin@bookstore.com" }
+                    { "10851584-7191-4dee-a2b5-305ae30a9777", 0, "0787cfeb-c8ac-4873-8fad-918a0ac9b714", "user@redmango.com", false, false, null, "System User", "USER@REDMANGO.COM", "USER@REDMANGO.COM", "AQAAAAIAAYagAAAAELGPRCbCa8+Ct96Dfy+lDI8vyd33YmnQP8G4zv+/1+vto9AIHLJMd04ebfUEq5eFXQ==", null, false, "c66f4ecf-6ad1-425b-a71b-9b8ff2c6edcc", false, "user@redmango.com" },
+                    { "8383f68f-764c-4427-92b7-6e98902f5f4e", 0, "4543f8d6-6e56-4998-8653-9d03b6e1cf37", "admin@redmango.com", false, false, null, "System Admin", "ADMIN@REDMANGO.COM", "ADMIN@REDMANGO.COM", "AQAAAAIAAYagAAAAEKRUpfinOIXVJyQ9mbPDhTOtFF4ugSTNCqSsVdUNcDpEXeeoK9Rjb8P+qlOfuBks6w==", null, false, "2bc253d3-bff1-4b4d-ba3d-704fdc4be420", false, "admin@redmango.com" }
                 });
 
             migrationBuilder.InsertData(

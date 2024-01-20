@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ReactDotNetApp.DTO
+namespace ReactDotNetApp.DTO.MenuDto
 {
-    public class MenuItemUpdateDto: BaseDto
+    public class MenuItemCreateDto
     {
         [Required]
         [StringLength(100)]
@@ -20,7 +19,7 @@ namespace ReactDotNetApp.DTO
 
         [Range(1, int.MaxValue)]
         public double Price { get; set; }
-       
+
         public string Image { get; set; }
 
         [Required]

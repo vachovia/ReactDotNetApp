@@ -11,6 +11,10 @@ namespace ReactDotNetApp.DataAccess
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -131,20 +135,20 @@ namespace ReactDotNetApp.DataAccess
                     Id = "8383f68f-764c-4427-92b7-6e98902f5f4e",
                     Email = "admin@redmango.com",
                     NormalizedEmail = "ADMIN@REDMANGO.COM",
-                    UserName = "admin@bookstore.com",
+                    UserName = "admin@redmango.com",
                     NormalizedUserName = "ADMIN@REDMANGO.COM",
                     Name = "System Admin",
-                    PasswordHash = hasher.HashPassword(null, "Password1")
+                    PasswordHash = hasher.HashPassword(null, "P@ssword1")
                 },
                 new AppUser
                 {
                     Id = "10851584-7191-4dee-a2b5-305ae30a9777",
                     Email = "user@redmango.com",
                     NormalizedEmail = "USER@REDMANGO.COM",
-                    UserName = "user@bookstore.com",
+                    UserName = "user@redmango.com",
                     NormalizedUserName = "USER@REDMANGO.COM",
                     Name = "System User",
-                    PasswordHash = hasher.HashPassword(null, "Password1")
+                    PasswordHash = hasher.HashPassword(null, "P@ssword1")
                 }
             );
 

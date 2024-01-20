@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ReactDotNetApp.DTO;
+using ReactDotNetApp.DTO.MenuDto;
 using ReactDotNetApp.Models;
 using ReactDotNetApp.Repositories.Interfaces;
 using ReactDotNetApp.Services;
@@ -11,6 +12,7 @@ namespace ReactDotNetApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MenuItemController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -26,7 +28,7 @@ namespace ReactDotNetApp.Controllers
             _menuItemRepository = menuItemRepository;
         }
 
-        [HttpGet] // GET: api/Books
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<MenuItemDto>>> GetMenuItems()
         {
             _logger.LogInformation($"Request to {nameof(GetMenuItems)}");
@@ -100,23 +102,30 @@ namespace ReactDotNetApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenuItem(int id, [FromForm] MenuItemUpdateDto menuItemDto)
+        public async Task<IActionResult> PutMenuItem(int id, [FromForm] MenuItemUpdateDto menuItemUpdateDto)
         {
             try
             {
-                if (id != menuItemDto.Id)
-                {
-                    return BadRequest();
-                }
+                if (id != menuItemUpdateDto.Id) { return BadRequest(); }
 
                 var menuItem = await _menuItemRepository.GetAsync(id);
 
-                if (menuItem == null)
-                {
-                    return NotFound();
-                }
+                if (menuItem == null) { return NotFound(); }
 
-                _mapper.Map(menuItemDto, menuItem);
+                _mapper.Map(menuItemUpdateDto, menuItem);
+
+                var file = menuItemUpdateDto.File;
+
+                if (file != null && file.Length > 0)
+                {
+                    string menuItemFileName = menuItem.Image.Split('/').Last();
+
+                    await _blobService.DeleteBlob(menuItemFileName, AzureStorage.Container);
+
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(menuItemUpdateDto.File.FileName)}";
+
+                    menuItem.Image = await _blobService.UploadBlob(fileName, AzureStorage.Container, menuItemUpdateDto.File);
+                }                
 
                 try
                 {
@@ -155,6 +164,12 @@ namespace ReactDotNetApp.Controllers
                 {
                     return NotFound();
                 }
+
+                string menuItemFileName = menuItem.Image.Split('/').Last();
+
+                await _blobService.DeleteBlob(menuItemFileName, AzureStorage.Container);
+
+                // int milliSeconds = 2000; Thread.Sleep(milliSeconds);
 
                 await _menuItemRepository.DeleteAsync(id);
 

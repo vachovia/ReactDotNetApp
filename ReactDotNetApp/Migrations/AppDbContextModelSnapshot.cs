@@ -253,36 +253,62 @@ namespace ReactDotNetApp.Migrations
                         {
                             Id = "8383f68f-764c-4427-92b7-6e98902f5f4e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4543f8d6-6e56-4998-8653-9d03b6e1cf37",
+                            ConcurrencyStamp = "6bd08ef9-c1d9-4b99-9831-881bd19d82b3",
                             Email = "admin@redmango.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "System Admin",
                             NormalizedEmail = "ADMIN@REDMANGO.COM",
                             NormalizedUserName = "ADMIN@REDMANGO.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKRUpfinOIXVJyQ9mbPDhTOtFF4ugSTNCqSsVdUNcDpEXeeoK9Rjb8P+qlOfuBks6w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBccj+BxxizJS4aQ6vRySE5vzLhMsXmzNasiQ542fAF3w3zmqv+l6VMpNFj8vs7B6w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2bc253d3-bff1-4b4d-ba3d-704fdc4be420",
+                            SecurityStamp = "e7fdb2bd-ac7b-491c-8bf5-4a4ec36e64d8",
                             TwoFactorEnabled = false,
-                            UserName = "admin@bookstore.com"
+                            UserName = "admin@redmango.com"
                         },
                         new
                         {
                             Id = "10851584-7191-4dee-a2b5-305ae30a9777",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0787cfeb-c8ac-4873-8fad-918a0ac9b714",
+                            ConcurrencyStamp = "2884e2ca-7c53-454f-9814-7e6daf57c647",
                             Email = "user@redmango.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             Name = "System User",
                             NormalizedEmail = "USER@REDMANGO.COM",
                             NormalizedUserName = "USER@REDMANGO.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELGPRCbCa8+Ct96Dfy+lDI8vyd33YmnQP8G4zv+/1+vto9AIHLJMd04ebfUEq5eFXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBY9ufq0mhhaBdwXRNQXbmkuYBVODw3GwGgthFT7K2pMddUrjaqE7Cp2aIXEWA6fqA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c66f4ecf-6ad1-425b-a71b-9b8ff2c6edcc",
+                            SecurityStamp = "f9b57091-c1bc-4c9c-a025-b6bd7dcbae59",
                             TwoFactorEnabled = false,
-                            UserName = "user@bookstore.com"
+                            UserName = "user@redmango.com"
                         });
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("ReactDotNetApp.Models.MenuItem", b =>
@@ -420,6 +446,100 @@ namespace ReactDotNetApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ReactDotNetApp.Models.OrderDetails", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.HasIndex("OrderHeaderId");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.OrderHeader", b =>
+                {
+                    b.Property<int>("OrderHeaderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderHeaderId"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("OrderTotal")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PickupEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickupName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickupPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StripePaymentIntentID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalItems")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderHeaderId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("OrderHeaders");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -469,6 +589,59 @@ namespace ReactDotNetApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.CartItem", b =>
+                {
+                    b.HasOne("ReactDotNetApp.Models.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReactDotNetApp.Models.ShoppingCart", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MenuItem");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.OrderDetails", b =>
+                {
+                    b.HasOne("ReactDotNetApp.Models.MenuItem", "MenuItem")
+                        .WithMany()
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReactDotNetApp.Models.OrderHeader", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MenuItem");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.OrderHeader", b =>
+                {
+                    b.HasOne("ReactDotNetApp.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.OrderHeader", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("ReactDotNetApp.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

@@ -68,4 +68,5 @@ namespace ReactDotNetApp.Controllers
 }
 
 // ApiKey = configuration.GetValue<string>("Stripe:ApiKey")
+// "sk_test_51Kb5VDIbFLvvlEjSpmCNAuIod7fc406dTVOHYxKBKxjeOnH7rbkHF5rYsRTzCtub2uiqTPxrzdSzlklXsOygDMeM00Q8qZRoCU"
 // apiKey='pk_test_51Kb5VDIbFLvvlEjSZaexkN8qyebzWWe8dZyn0OFf819fR6Cntd9Ja4rWd4ASdjvr6jM0yuX0BgWW1ToSgtvuczR400uBgROxku'

@@ -12,7 +12,7 @@ namespace ReactDotNetApp.Middlewares.Services
         public static IServiceCollection UseAppIdentityContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("Default"));
+                options.UseSqlServer(configuration.GetConnectionString("AzureSql"));
             });
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 

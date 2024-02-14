@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReactDotNetApp.DTO.ShoppingCartDto;
 using ReactDotNetApp.Repositories.Interfaces;
 using ReactDotNetApp.Static;
@@ -7,6 +8,7 @@ namespace ReactDotNetApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ShoppingCartController : ControllerBase
     {
         private readonly IShoppingCartRepository _shoppingCartRepository;

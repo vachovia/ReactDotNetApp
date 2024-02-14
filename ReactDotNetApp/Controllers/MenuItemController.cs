@@ -12,7 +12,7 @@ namespace ReactDotNetApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class MenuItemController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -72,6 +72,7 @@ namespace ReactDotNetApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MenuItem>> PostMenuItem([FromForm] MenuItemCreateDto menuItemCreateDto)
         {
             try
@@ -102,6 +103,7 @@ namespace ReactDotNetApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutMenuItem(int id, [FromForm] MenuItemUpdateDto menuItemUpdateDto)
         {
             try
@@ -154,6 +156,7 @@ namespace ReactDotNetApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteMenuItem(int id)
         {
             try

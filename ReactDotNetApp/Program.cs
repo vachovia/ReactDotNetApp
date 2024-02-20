@@ -45,7 +45,7 @@ else
 }
 app.UseHttpsRedirection();
 
-app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
+app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().WithExposedHeaders("*"));
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -12,7 +12,6 @@ namespace ReactDotNetApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class MenuItemController : ControllerBase
     {
         private readonly IMapper _mapper;
